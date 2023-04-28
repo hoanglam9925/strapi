@@ -58,14 +58,14 @@ const init = (licenseDir, logger) => {
   }
 
   try {
-    const license = process.env.STRAPI_LICENSE || readLicense(licenseDir);
+    // const license = process.env.STRAPI_LICENSE || readLicense(licenseDir);
 
-    if (license) {
-      ee.licenseInfo = verifyLicense(license);
-      enable();
-    }
+    // if (license) {
+    //   ee.licenseInfo = verifyLicense(license);
+    //   enable();
+    // }
   } catch (error) {
-    disable(error.message);
+    // disable(error.message);
   }
 };
 
@@ -166,21 +166,21 @@ const validateInfo = () => {
 };
 
 const checkLicense = async ({ strapi }) => {
-  const shouldStayOffline =
-    ee.licenseInfo.type === 'gold' &&
-    // This env variable support is temporarily used to ease the migration between online vs offline
-    process.env.STRAPI_DISABLE_LICENSE_PING?.toLowerCase() === 'true';
+  // const shouldStayOffline =
+  //   ee.licenseInfo.type === 'gold' &&
+  //   // This env variable support is temporarily used to ease the migration between online vs offline
+  //   process.env.STRAPI_DISABLE_LICENSE_PING?.toLowerCase() === 'true';
 
-  if (!shouldStayOffline) {
-    await onlineUpdate({ strapi });
-    strapi.cron.add({ [shiftCronExpression('0 0 */12 * * *')]: onlineUpdate });
-  } else {
-    if (!ee.licenseInfo.expireAt) {
-      return disable('Your license does not have offline support.');
-    }
+  // if (!shouldStayOffline) {
+  //   await onlineUpdate({ strapi });
+  //   strapi.cron.add({ [shiftCronExpression('0 0 */12 * * *')]: onlineUpdate });
+  // } else {
+  //   if (!ee.licenseInfo.expireAt) {
+  //     return disable('Your license does not have offline support.');
+  //   }
 
-    validateInfo();
-  }
+  //   validateInfo();
+  // }
 };
 
 const list = () => {
@@ -198,7 +198,7 @@ module.exports = Object.freeze({
   checkLicense,
 
   get isEE() {
-    return ee.enabled;
+    return true;
   },
 
   get seats() {
